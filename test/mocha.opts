@@ -1,0 +1,8 @@
+--recursive
+--require should
+--require ./test/support
+--bail
+--ui bdd
+--growl
+--slow 250
+--timeout 1000
