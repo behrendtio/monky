@@ -33,13 +33,15 @@ monky.factory('User', { username: 'name' }, function(err) {
 monky.factory('User', { username: 'name' });
 ```
 
-The above code set's up a new factory for the model named _User_. Each model that will be created from this factory will have an _username_ which is set to _name_. All other paths will be empty. Of course this is not enough to make documents valid. Therefore `monky` comes with a sequence function which replaces the String "_#n_" with a sequence number. So in order to have a unique username, one could use the following example:
+The above code set's up a new factory for the model named _User_. Each model that will be created from this factory will have an _username_ which is set to _name_. All other paths will be empty.
+
+Of course this is not enough to make documents valid. Therefore `monky` comes with a sequence function which replaces the String "#n" with a sequence number. So in order to have a unique username, one could use the following example:
 
 ```js
 monky.factory('User', { username: '#n name' });
 ```
 
-This will lead to users with _usernames_ like "_1 name_", "2 name_" and so on.
+This will lead to users with _usernames_ like "1 name", "2 name" and so on.
 
 ## Use factories to build/create mongoose documents
 
