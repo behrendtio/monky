@@ -131,42 +131,4 @@ describe('Monky', function() {
       });
     });
   });
-
-  it('supports sync version of build', function(done) {
-    var value = 'something';
-    monky.factory('User', { username: value });
-
-    var user = monky.build('User');
-
-    expect(user).to.have.property('username');
-    expect(user.username).to.be(value);
-    done();
-  });
-
-  it('throws error on sync build', function(done) {
-    monky.factory('User', { invalidkey: true });
-    expect(function() {
-      monky.build('User');
-    }).to.throwError();
-    done();
-  });
-
-  it('supports sync version of create')
-    //var value = 'something something';
-    //monky.factory('User', { username: value });
-
-    //var user = monky.create('User');
-
-    //expect(user).to.have.property('username');
-    //expect(user).to.have.property('_id');
-    //expect(user.username).to.be(value);
-    //done();
-
-  it('throws error on sync create', function(done) {
-    monky.factory('User', { invalidkey: true });
-    expect(function() {
-      monky.build('User');
-    }).to.throwError();
-    done();
-  });
 });
