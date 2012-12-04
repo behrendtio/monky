@@ -39,12 +39,13 @@ describe('Monky', function() {
     done();
   });
 
-  it('resets factories', function(done) {
+  it('resets factories with fluent interface', function(done) {
     monky.factory('User', { username: '#n' });
     expect(Object.keys(monky.factories).length).to.be(1);
 
-    monky.reset();
+    var result = monky.reset();
 
+    expect(result).to.be.a('object');
     expect(Object.keys(monky.factories).length).to.be(0);
     done();
   });

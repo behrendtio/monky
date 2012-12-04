@@ -6,15 +6,12 @@
     "npm":  "1.1.x"
   },
   "author": "Mario Behrendt <info@mario-behrendt.de>",
-  "engines": {
-    "node": "0.8.x"
-  },
   "dependencies": {
-    "debug": "*"
+    "mongoose": "3.4.0"
   },
   "devDependencies" : {
-    "mongoose": "3.4.0",
     "mocha": "1.3.2",
-    "debug": "0.7.0"
+    "expect.js": "0.1.2",
+    "stats": "1.0.0"
   }
 }
