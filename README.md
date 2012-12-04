@@ -51,11 +51,13 @@ The `build` function builds new mongoose models based on the set up factories **
 monky.build('User', function(err, user) {
   // user ==> mongoose user model with pre set data
 });
+```
 
 ### Create
 
 `create` uses `build` to set up a new model instance and actually saves it.
 
+```js
 monky.create('User', function(err, user) {
   // user ==> saved mongoose user model instance
 });
