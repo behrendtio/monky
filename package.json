@@ -1,11 +1,21 @@
 {
-  "name": "Monky",
+  "name": "monky",
   "version": "0.0.1",
+  "description": "Mongoose fixtures library inspired by factory_girl",
+  "main": "index.js",
   "engines": {
-    "node": "0.8.x",
-    "npm":  "1.1.x"
+    "node": ">= 0.8.0"
   },
+  "keywords": ["mongoose", "mongo", "factory", "test", "testing", "setup", "fixtures", "mocha", "tdd"],
   "author": "Mario Behrendt <info@mario-behrendt.de>",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type" : "git",
+    "url": "git://github.com/mbehrendt/monky.git"
+  },
+  "license": "MIT",
   "dependencies": {
     "mongoose": "3.4.0"
   },
