@@ -1,4 +1,5 @@
 var mongoose  = require('mongoose')
+  , expect    = require('expect.js')
   , Monky     = require('../')
   , monky     = new Monky();
 

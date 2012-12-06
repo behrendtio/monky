@@ -1,6 +1,4 @@
 --recursive
---require should
---require ./test/support
 --bail
 --ui bdd
 --growl
