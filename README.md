@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/mbehrendt/monky.png?branch=master)](https://travis-ci.org/mbehrendt/monky)
+
 # Monky
 
 [Mongoose](http://mongoosejs.com) fixtures library inspired by [factory_girl](https://github.com/thoughtbot/factory_girl)
