@@ -20,18 +20,11 @@ describe('Monky', function() {
       email:  { type: 'string' }
     });
 
-    var Model = mongoose.model('User', UserSchema);
-    Model.collection.drop(done);
-  };
-
-  function connect() {
-    mongoose.connect('mongodb://localhost/monky_test', function(err) {
-      if (err) throw err;
-    });
+    mongoose.model('User', UserSchema);
+    done();
   };
 
   before(function(done) {
-    connect();
     createUserSchema(done);
   });
 

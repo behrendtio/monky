@@ -1,3 +1,4 @@
+--require ./test/stub
 --recursive
 --bail
 --ui bdd
