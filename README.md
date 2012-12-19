@@ -67,6 +67,57 @@ monky.create('User', function(err, user) {
 });
 ```
 
+## Complete example using mocha
+
+```js
+// model.js
+var mongoose = require('mongoose');
+var Schema = new mongoose.Schema({ username: { type: 'string', unique: true, required: true }});
+
+mongoose.model('User', Schema);
+
+// Pre-test file (setup)
+var monky = require('monky');
+monky.factory('User', { username: '#n name' });
+
+// Actual test
+describe('User', function() {
+  it('should not save without username', function(done) {
+    monky.build('User', function(err, user) {
+      user.name = undefined;
+      user.save(function(err) {
+        // Expect err
+      });
+    });
+  });
+
+  it('should save user with valid data', function(done) {
+    monky.build('User', function(err, user) {
+      user.save(done);
+    });
+  });
+
+  it('should return computed amount of order', function(done) {
+    monky.create('User', function(err, user) {
+      var amount = user.getComputedOrderAmount();
+      // Do some checks here...
+    });
+  });
+});
+
+// Alternatively one can create a new user using before hook
+describe('User', function() {
+  beforeEach(function(done) {
+    var suite = this;
+    monky.create('User', function(err, user) {
+      if (err) return done(err);
+      suite.user = user;
+      done();
+    );
+  });
+});
+```
+
 # Running tests
 
 Install dev dependencies and run the tests.

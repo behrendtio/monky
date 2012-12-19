@@ -3,5 +3,5 @@
 --bail
 --ui bdd
 --growl
---slow 250
---timeout 1000
+--slow 25
+--timeout 50
