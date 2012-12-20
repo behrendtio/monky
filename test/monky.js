@@ -1,7 +1,7 @@
 var mongoose  = require('mongoose')
   , expect    = require('expect.js')
   , Monky     = require('../')
-  , monky     = new Monky();
+  , monky     = new Monky(mongoose);
 
 describe('Monky', function() {
   function createUserSchema(done) {
@@ -39,7 +39,6 @@ describe('Monky', function() {
 
     var result = monky.reset();
 
-    expect(result).to.be.a('object');
     expect(Object.keys(monky.factories).length).to.be(0);
     done();
   });
