@@ -95,7 +95,7 @@ module.exports.monky = monky;
 /*
  * Actual test
  */
-var monky = require('../setup');
+var monky = require('../setup').monky;
 
 describe('User', function() {
   it('should not save without username', function(done) {
