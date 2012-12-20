@@ -5,6 +5,10 @@ var mongoose  = require('mongoose')
 
 describe('Monky', function() {
   function createUserSchema(done) {
+    var Address = new mongoose.Schema({
+      street: { type: 'string' }
+    });
+
     var UserSchema = new mongoose.Schema({
       username: {
         type: 'string',
@@ -17,7 +21,8 @@ describe('Monky', function() {
       active: { type: 'boolean' },
       street: { type: 'string' },
       city:   { type: 'string' },
-      email:  { type: 'string' }
+      email:  { type: 'string' },
+      addresses: [Address]
     });
 
     mongoose.model('User', UserSchema);
@@ -124,4 +129,14 @@ describe('Monky', function() {
       });
     });
   });
+
+  it('replaces #n within embedded documents', function(done) {
+    monky.factory('User', { addresses: [{ street: 'Avenue #n' }] });
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.addresses.length).to.be(1);
+      expect(user.addresses[0].street).to.match(/Avenue \d/);
+      done();
+    });
+  })
 });

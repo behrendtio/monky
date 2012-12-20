@@ -45,7 +45,7 @@ Of course this is not enough to make documents valid. Therefore `monky` comes wi
 monky.factory('User', { username: '#n name' });
 ```
 
-This will lead to users with _usernames_ like "1 name", "2 name" and so on.
+This will lead to users with _usernames_ like "1 name", "2 name" and so on. Embedded documents are also supported.
 
 ## Use factories to build/create mongoose documents
 
