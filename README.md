@@ -25,7 +25,9 @@ Or put `monky` into your project's `package.json` file.
 In order to build/create new documents, a factory needs to be set up for each model that will be used. This should be done in some kind of pre-test-suite-file or maybe in a global `before()`-function.
 
 ```js
-var monky = new Monky();
+var mongoose  = require('mongoose')
+  , Monky     = require('monky')
+  , monky     = new Monky(mongoose);
 
 monky.factory('User', { username: 'name' }, function(err) {
   // ..
@@ -70,17 +72,31 @@ monky.create('User', function(err, user) {
 ## Complete example using mocha
 
 ```js
-// model.js
+/*
+ * Model file
+ */
 var mongoose = require('mongoose');
 var Schema = new mongoose.Schema({ username: { type: 'string', unique: true, required: true }});
-
 mongoose.model('User', Schema);
 
-// Pre-test file (setup)
-var monky = require('monky');
+/*
+ * Pre-test file (setup)
+ */
+var mongoose  = require('mongoose')
+  , Monky     = require('monky')
+  , monky     = new Monky(mongoose);
+
 monky.factory('User', { username: '#n name' });
 
-// Actual test
+// Mongoose connect and other setup stuff
+
+module.exports.monky = monky;
+
+/*
+ * Actual test
+ */
+var monky = require('../setup');
+
 describe('User', function() {
   it('should not save without username', function(done) {
     monky.build('User', function(err, user) {
