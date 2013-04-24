@@ -69,6 +69,20 @@ monky.create('User', function(err, user) {
 });
 ```
 
+### Build and create lists
+
+As of version 0.0.4 one can build and create lists of documents:
+
+```js
+monky.buildList('User', 5, function(err, users) {
+  // users ==> array of 5 unsaved documents
+});
+
+monky.createList('User', 5, function(err, users) {
+  // users ==> array of 5 saved documents
+});
+```
+
 ## Complete example using mocha
 
 ```js
