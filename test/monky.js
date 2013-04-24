@@ -68,6 +68,7 @@ describe('Monky', function() {
     monky.factory('User', { username: '#n name' });
     monky.build('User', function(err, user) {
       if (err) return done(err);
+      expect(user.isNew).to.be(true);
       expect(user.username).to.match(/\d name/);
       done();
     });
@@ -78,6 +79,7 @@ describe('Monky', function() {
     monky.factory('User', { username: value });
     monky.build('User', function(err, user) {
       if (err) return done(err);
+      expect(user.isNew).to.be(true);
       expect(user.username).to.be(value);
       done();
     });
@@ -87,6 +89,7 @@ describe('Monky', function() {
     monky.factory('User', { username: 'my ##n name' });
     monky.build('User', function(err, user) {
       if (err) return done(err);
+      expect(user.isNew).to.be(true);
       expect(user.username).to.match(/my #\d name/);
       done();
     });
@@ -103,6 +106,7 @@ describe('Monky', function() {
     monky.factory('User', { active: true, username: condition });
     monky.build('User', function(err, user) {
       if (err) return done(err);
+      expect(user.isNew).to.be(true);
       expect(user.username).to.be('active')
       done();
     });
@@ -112,6 +116,7 @@ describe('Monky', function() {
     monky.factory('User', { username: '#n username long enough' });
     monky.create('User', function(err, user) {
       if (err) return done(err);
+      expect(user.isNew).to.be(false);
       expect(user).to.have.property('_id');
       done();
     });
@@ -121,9 +126,11 @@ describe('Monky', function() {
     monky.factory('User', { username: '#n username long enough' });
     monky.build('User', function(err, first) {
       if (err) return done(err);
+      expect(first.isNew).to.be(true);
 
       monky.build('User', function(err, second) {
         if (err) return done(err);
+        expect(first.isNew).to.be(true);
         expect(first.username).to.not.be(second.username);
         done();
       });
@@ -134,9 +141,40 @@ describe('Monky', function() {
     monky.factory('User', { addresses: [{ street: 'Avenue #n' }] });
     monky.build('User', function(err, user) {
       if (err) return done(err);
+      expect(user.isNew).to.be(true);
       expect(user.addresses.length).to.be(1);
       expect(user.addresses[0].street).to.match(/Avenue \d/);
       done();
     });
   })
+
+  it('returns a list of built models', function(done) {
+    monky.factory('User', { username: 'build_list' });
+    monky.buildList('User', 3, function(err, users) {
+      if (err) return done(err);
+      expect(users).to.be.an(Array);
+      expect(users.length).to.be(3);
+      users.forEach(function(user) {
+        expect(user.isNew).to.be(true);
+        expect(user).to.have.property('username');
+        expect(user.username).to.be('build_list');
+      });
+      done();
+    });
+  });
+
+  it('returns a list of created models', function(done) {
+    monky.factory('User', { username: 'create_list' });
+    monky.createList('User', 3, function(err, users) {
+      if (err) return done(err);
+      expect(users).to.be.an(Array);
+      expect(users.length).to.be(3);
+      users.forEach(function(user) {
+        expect(user.isNew).to.be(false);
+        expect(user).to.have.property('username');
+        expect(user.username).to.be('create_list');
+      });
+      done();
+    });
+  });
 });

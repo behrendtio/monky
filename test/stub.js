@@ -4,6 +4,9 @@ var sinon     = require('sinon')
 sinon.stub(mongoose.Model.prototype, 'save', function(cb) {
   var model = this;
   this.validate(function(err) {
+    if (!err) {
+      model.isNew = false;
+    }
     cb(err, model);
   });
 });
