@@ -13,7 +13,7 @@
   },
   "repository": {
     "type" : "git",
-    "url": "git://github.com/mbehrendt/monky.git"
+    "url": "git://github.com/behrendtio/monky.git"
   },
   "license": "MIT",
   "dependencies": {
