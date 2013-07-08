@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/mbehrendt/monky.png?branch=master)](https://travis-ci.org/mbehrendt/monky)
+[![Build Status](https://secure.travis-ci.org/behrendtio/monky.png?branch=master)](https://travis-ci.org/behrendtio/monky)
 
 # Monky
 
@@ -153,7 +153,7 @@ describe('User', function() {
 Install dev dependencies and run the tests.
 
 ```bash
-$ npm install
+$ npm i
 $ make test
 ```
 
