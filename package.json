@@ -3,6 +3,7 @@
   "version": "0.0.5",
   "description": "Mongoose fixtures library inspired by factory_girl",
   "main": "index.js",
+  "homepage": "http://mario-behrendt.de/monky",
   "engines": {
     "node": ">= 0.8.0"
   },
