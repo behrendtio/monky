@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Monky by behrendtio</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Monky</h1>
+        <p>Mongoose fixtures library inspired by factory_girl</p>
+        <p class="view"><a href="https://github.com/behrendtio/monky">View the Project on GitHub <small>behrendtio/monky</small></a></p>
+        <ul>
+          <li><a href="https://github.com/behrendtio/monky/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/behrendtio/monky/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/behrendtio/monky">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p><a href="https://travis-ci.org/behrendtio/monky"><img src="https://secure.travis-ci.org/behrendtio/monky.png?branch=master" alt="Build Status"></a></p>
+
+<h1>
+<a name="monky" class="anchor" href="#monky"><span class="octicon octicon-link"></span></a>Monky</h1>
+
+<p><a href="http://mongoosejs.com">Mongoose</a> fixtures library inspired by <a href="https://github.com/thoughtbot/factory_girl">factory_girl</a></p>
+
+<h1>
+<a name="philosophy" class="anchor" href="#philosophy"><span class="octicon octicon-link"></span></a>Philosophy</h1>
+
+<p>Inspired by factory_girl this library tries to bring similar functionality to <a href="http://nodejs.org">node</a>. The purpose is to avoid boilerplate code in your tests by creating models again and again, which can lead to very messy test suites when it comes to model with quite some columns.</p>
+
+<h1>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h1>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>npm install monky
+</pre></div>
+
+<p>Or put <code>monky</code> into your project's <code>package.json</code> file.</p>
+
+<h1>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h1>
+
+<p><code>monky</code> is separated into two steps: set up a factory (once) and use the factories to create models (unlimited).</p>
+
+<h2>
+<a name="create-factory" class="anchor" href="#create-factory"><span class="octicon octicon-link"></span></a>Create factory</h2>
+
+<p>In order to build/create new documents, a factory needs to be set up for each model that will be used. This should be done in some kind of pre-test-suite-file or maybe in a global <code>before()</code>-function.</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">mongoose</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">Monky</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'monky'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">monky</span>     <span class="o">=</span> <span class="k">new</span> <span class="nx">Monky</span><span class="p">(</span><span class="nx">mongoose</span><span class="p">);</span>
+
+<span class="nx">monky</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">'name'</span> <span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ..</span>
+<span class="p">});</span>
+
+<span class="c1">// Set up factory without callback (throws)</span>
+<span class="nx">monky</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">'name'</span> <span class="p">});</span>
+</pre></div>
+
+<p>The above code set's up a new factory for the model named <em>User</em>. Each model that will be created from this factory will have an <em>username</em> which is set to <em>name</em>. All other paths will be empty.</p>
+
+<p>Of course this is not enough to make documents valid. Therefore <code>monky</code> comes with a sequence function which replaces the String "#n" with a sequence number. So in order to have a unique username, one could use the following example:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">monky</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">'#n name'</span> <span class="p">});</span>
+</pre></div>
+
+<p>This will lead to users with <em>usernames</em> like "1 name", "2 name" and so on. Embedded documents are also supported.</p>
+
+<h2>
+<a name="use-factories-to-buildcreate-mongoose-documents" class="anchor" href="#use-factories-to-buildcreate-mongoose-documents"><span class="octicon octicon-link"></span></a>Use factories to build/create mongoose documents</h2>
+
+<h3>
+<a name="build" class="anchor" href="#build"><span class="octicon octicon-link"></span></a>Build</h3>
+
+<p>The <code>build</code> function builds new mongoose models based on the set up factories <strong>without saving them</strong>.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">monky</span><span class="p">.</span><span class="nx">build</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// user ==&gt; mongoose user model with pre set data</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="create" class="anchor" href="#create"><span class="octicon octicon-link"></span></a>Create</h3>
+
+<p><code>create</code> uses <code>build</code> to set up a new model instance and actually saves it.</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">monky</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// user ==&gt; saved mongoose user model instance</span>
+<span class="p">});</span>
+</pre></div>
+
+<h3>
+<a name="build-and-create-lists" class="anchor" href="#build-and-create-lists"><span class="octicon octicon-link"></span></a>Build and create lists</h3>
+
+<p>As of version 0.0.4 one can build and create lists of documents:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">monky</span><span class="p">.</span><span class="nx">buildList</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">users</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// users ==&gt; array of 5 unsaved documents</span>
+<span class="p">});</span>
+
+<span class="nx">monky</span><span class="p">.</span><span class="nx">createList</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">users</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// users ==&gt; array of 5 saved documents</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="complete-example-using-mocha" class="anchor" href="#complete-example-using-mocha"><span class="octicon octicon-link"></span></a>Complete example using mocha</h2>
+
+<div class="highlight highlight-js"><pre><span class="cm">/*</span>
+<span class="cm"> * Model file</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">mongoose</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">Schema</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">mongoose</span><span class="p">.</span><span class="nx">Schema</span><span class="p">({</span> <span class="nx">username</span><span class="o">:</span> <span class="p">{</span> <span class="nx">type</span><span class="o">:</span> <span class="s1">'string'</span><span class="p">,</span> <span class="nx">unique</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nx">required</span><span class="o">:</span> <span class="kc">true</span> <span class="p">}});</span>
+<span class="nx">mongoose</span><span class="p">.</span><span class="nx">model</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="nx">Schema</span><span class="p">);</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Pre-test file (setup)</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">mongoose</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'mongoose'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">Monky</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'monky'</span><span class="p">)</span>
+  <span class="p">,</span> <span class="nx">monky</span>     <span class="o">=</span> <span class="k">new</span> <span class="nx">Monky</span><span class="p">(</span><span class="nx">mongoose</span><span class="p">);</span>
+
+<span class="nx">monky</span><span class="p">.</span><span class="nx">factory</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="s1">'#n name'</span> <span class="p">});</span>
+
+<span class="c1">// Mongoose connect and other setup stuff</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">monky</span> <span class="o">=</span> <span class="nx">monky</span><span class="p">;</span>
+
+<span class="cm">/*</span>
+<span class="cm"> * Actual test</span>
+<span class="cm"> */</span>
+<span class="kd">var</span> <span class="nx">monky</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../setup'</span><span class="p">).</span><span class="nx">monky</span><span class="p">;</span>
+
+<span class="nx">describe</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">it</span><span class="p">(</span><span class="s1">'should not save without username'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">monky</span><span class="p">.</span><span class="nx">build</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">user</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+      <span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Expect err</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">'should save user with valid data'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">monky</span><span class="p">.</span><span class="nx">build</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">user</span><span class="p">.</span><span class="nx">save</span><span class="p">(</span><span class="nx">done</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="nx">it</span><span class="p">(</span><span class="s1">'should return computed amount of order'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">monky</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">amount</span> <span class="o">=</span> <span class="nx">user</span><span class="p">.</span><span class="nx">getComputedOrderAmount</span><span class="p">();</span>
+      <span class="c1">// Do some checks here...</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// Alternatively one can create a new user using before hook</span>
+<span class="nx">describe</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">beforeEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">done</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">suite</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
+    <span class="nx">monky</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="k">return</span> <span class="nx">done</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+      <span class="nx">suite</span><span class="p">.</span><span class="nx">user</span> <span class="o">=</span> <span class="nx">user</span><span class="p">;</span>
+      <span class="nx">done</span><span class="p">();</span>
+    <span class="p">);</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+
+<h1>
+<a name="running-tests" class="anchor" href="#running-tests"><span class="octicon octicon-link"></span></a>Running tests</h1>
+
+<p>Install dev dependencies and run the tests.</p>
+
+<div class="highlight highlight-bash"><pre><span class="nv">$ </span>npm i
+<span class="nv">$ </span>make <span class="nb">test</span>
+</pre></div>
+
+<h1>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>(The MIT License)</p>
+
+<p>Copyright (c) 2012 Mario Behrendt <a href="mailto:info@mario-behrendt.de">info@mario-behrendt.de</a></p>
+
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+
+<p>THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/behrendtio">behrendtio</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
