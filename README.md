@@ -47,6 +47,22 @@ monky.factory('User', { username: '#n name' });
 
 This will lead to users with _usernames_ like "1 name", "2 name" and so on. Embedded documents are also supported.
 
+### References
+
+Monky also supports references between documents:
+
+```js
+monky.factory('User', { username: 'foo' });
+monky.factory('Message', { _user: 'User' });
+
+monk.build('Message', function(message) {
+  console.log(message._user.username); // 'foo'
+});
+```
+
+Every attribute that starts with an underscore will be treated as reference. The
+according factory must be defined before it can be used in a reference.
+
 ## Use factories to build/create mongoose documents
 
 ### Build

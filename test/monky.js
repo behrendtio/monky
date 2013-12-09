@@ -25,7 +25,16 @@ describe('Monky', function() {
       addresses: [Address]
     });
 
+    var MessageSchema = new mongoose.Schema({
+      body: 'string',
+      _user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    });
+
     mongoose.model('User', UserSchema);
+    mongoose.model('Message', MessageSchema);
     done();
   };
 
@@ -175,6 +184,29 @@ describe('Monky', function() {
         expect(user.username).to.be('create_list');
       });
       done();
+    });
+  });
+
+  it('throws error if related factory is not present', function(done) {
+    monky.factory('Message', { body: 'Hi!', _user: 'User' });
+
+    monky.build('Message', function(err) {
+      expect(err).to.not.be(null);
+      done();
+    });
+  });
+
+  it('creates related document if factory is present', function(done) {
+    var username = 'referenced';
+
+    monky.factory('User', { username: username });
+    monky.factory('Message', { body: 'Hi!', _user: 'User' });
+
+    monky.build('Message', function(err, message) {
+      if (err) return done(err);
+      expect(message._user.username).to.be(username)
+
+      message.save(done);
     });
   });
 });
