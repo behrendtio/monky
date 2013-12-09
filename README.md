@@ -55,7 +55,7 @@ Monky also supports references between documents:
 monky.factory('User', { username: 'foo' });
 monky.factory('Message', { _user: 'User' });
 
-monk.build('Message', function(message) {
+monky.build('Message', function(message) {
   console.log(message._user.username); // 'foo'
 });
 ```
