@@ -1,6 +1,6 @@
 {
   "name": "monky",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Mongoose fixtures library inspired by factory_girl",
   "main": "index.js",
   "homepage": "http://mario-behrendt.de/monky",
