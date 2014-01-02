@@ -99,6 +99,16 @@ monky.createList('User', 5, function(err, users) {
 });
 ```
 
+## Reset factories
+
+Since overwriting factories is not allowed, factories can be reset either
+completely or for a certain factory only:
+
+```js
+monky.reset(); // Reset all
+monky.reset('User'); // Reset only 'User' factory
+```
+
 ## Complete example using mocha
 
 ```js
