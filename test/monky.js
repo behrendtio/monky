@@ -51,9 +51,21 @@ describe('Monky', function() {
     monky.factory('User', { username: '#n' });
     expect(Object.keys(monky.factories).length).to.be(1);
 
-    var result = monky.reset();
+    monky.reset();
 
     expect(Object.keys(monky.factories).length).to.be(0);
+    done();
+  });
+
+  it('resets a certain factory only', function(done) {
+    monky.factory('User', { username: '#n' });
+    monky.factory('Message', { body: 'Foo' });
+
+    expect(Object.keys(monky.factories).length).to.be(2);
+
+    monky.reset('Message');
+
+    expect(Object.keys(monky.factories)).to.eql(['User']);
     done();
   });
 
