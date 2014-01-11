@@ -107,6 +107,13 @@ according factory must be defined before it can be used in a reference.</p>
 <span class="p">});</span>
 </pre></div>
 
+<p>Also you can set attributes when building to replace defaults values</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">mongo</span><span class="p">.</span><span class="nx">build</span><span class="p">(</span><span class="s1">'User'</span> <span class="p">{</span><span class="nx">city</span><span class="o">:</span> <span class="s2">"California"</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s2">"custom@email.com"</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">){</span>
+  <span class="c1">// user ==&gt; mongoose user model with pre set data but with custom values</span>
+<span class="p">})</span>
+</pre></div>
+
 <h3>
 <a name="create" class="anchor" href="#create"><span class="octicon octicon-link"></span></a>Create</h3>
 
@@ -115,6 +122,13 @@ according factory must be defined before it can be used in a reference.</p>
 <div class="highlight highlight-js"><pre><span class="nx">monky</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'User'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// user ==&gt; saved mongoose user model instance</span>
 <span class="p">});</span>
+</pre></div>
+
+<p>Also you can set attributes when creating to replace defaults values</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">mongo</span><span class="p">.</span><span class="nx">create</span><span class="p">(</span><span class="s1">'User'</span> <span class="p">{</span><span class="nx">city</span><span class="o">:</span> <span class="s2">"California"</span><span class="p">,</span> <span class="nx">email</span><span class="o">:</span> <span class="s2">"custom@email.com"</span><span class="p">},</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">user</span><span class="p">){</span>
+  <span class="c1">// user ==&gt; saved mongoose user model with custom values</span>
+<span class="p">})</span>
 </pre></div>
 
 <h3>
