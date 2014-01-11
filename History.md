@@ -1,4 +1,9 @@
 
+0.2.0 / 2014-01-11 
+==================
+
+ * Support for custom values on build/create methods.
+
 0.1.1 / 2014-01-02 
 ==================
 
