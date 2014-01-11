@@ -78,7 +78,7 @@ monky.build('User', function(err, user) {
 Also you can set attributes when building to replace defaults values
 
 ```js
-mongo.build('User' {city: "California", email: "custom@email.com"}, function(err, user){
+monky.build('User' {city: "California", email: "custom@email.com"}, function(err, user){
   // user ==> mongoose user model with pre set data but with custom values
 })
 ```
@@ -96,7 +96,7 @@ monky.create('User', function(err, user) {
 Also you can set attributes when creating to replace defaults values
 
 ```js
-mongo.create('User' {city: "California", email: "custom@email.com"}, function(err, user){
+monky.create('User' {city: "California", email: "custom@email.com"}, function(err, user){
   // user ==> saved mongoose user model with custom values
 })
 ```
