@@ -23,6 +23,7 @@ describe('Monky', function() {
       city:   { type: 'string' },
       email:  { type: 'string' },
       addresses: [Address]
+
     });
 
     var MessageSchema = new mongoose.Schema({
@@ -221,4 +222,30 @@ describe('Monky', function() {
       message.save(done);
     });
   });
+
+  it('should build documents with custom user params', function(done) {
+    var username = "Bob"
+    var customUser = "Ted";
+
+    monky.factory('User', { username: username });
+
+    monky.build('User', { username: customUser }, function(err, user) {
+      if(err) throw err;
+      expect(user.username).to.be.equal(customUser)
+      done();
+    })
+  })
+
+  it('should create documents with custom user params', function(done) {
+    var username = "Bob"
+    var customUser = "MycustomUser";
+
+    monky.factory('User', { username: username });
+
+    monky.create('User', { username: customUser }, function(err, user) {
+      if(err) throw err;
+      expect(user.username).to.be.equal(customUser)
+      done();
+    })
+  })
 });

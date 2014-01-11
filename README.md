@@ -75,6 +75,14 @@ monky.build('User', function(err, user) {
 });
 ```
 
+Also you can set attributes when building to replace defaults values
+
+```js
+mongo.build('User' {city: "California", email: "custom@email.com"}, function(err, user){
+  // user ==> mongoose user model with pre set data but with custom values
+})
+```
+
 ### Create
 
 `create` uses `build` to set up a new model instance and actually saves it.
@@ -83,6 +91,14 @@ monky.build('User', function(err, user) {
 monky.create('User', function(err, user) {
   // user ==> saved mongoose user model instance
 });
+```
+
+Also you can set attributes when creating to replace defaults values
+
+```js
+mongo.create('User' {city: "California", email: "custom@email.com"}, function(err, user){
+  // user ==> saved mongoose user model with custom values
+})
 ```
 
 ### Build and create lists
