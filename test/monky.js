@@ -224,7 +224,7 @@ describe('Monky', function() {
   });
 
   it('should build documents with custom user params', function(done) {
-    var username = "Bob"
+    var username = "Bob";
     var customUser = "Ted";
 
     monky.factory('User', { username: username });
@@ -233,19 +233,32 @@ describe('Monky', function() {
       if(err) throw err;
       expect(user.username).to.be.equal(customUser)
       done();
-    })
-  })
+    });
+  });
 
   it('should create documents with custom user params', function(done) {
-    var username = "Bob"
+    var username = "Bob";
     var customUser = "MycustomUser";
 
     monky.factory('User', { username: username });
 
     monky.create('User', { username: customUser }, function(err, user) {
       if(err) throw err;
-      expect(user.username).to.be.equal(customUser)
+      expect(user.username).to.be.equal(customUser);
       done();
+    });
+  });
+
+  it("should not replace default factories options reference when using custom values", function(done) {
+    var username = "myusernametest";
+
+    monky.factory('User', {username: username});
+
+    monky.create('User', {username: "mycustomusername"}, function(err, customUser) {
+      monky.create('User', function(err, defaultUser) {
+        expect(defaultUser.username).to.be.equal(username);
+        done();
+      });
     })
-  })
+  });
 });
