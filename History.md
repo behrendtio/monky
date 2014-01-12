@@ -1,4 +1,9 @@
 
+0.2.1 / 2014-01-12 
+==================
+
+ * Fix to not replace this.factories[model] reference when using custom values.
+
 0.2.0 / 2014-01-11 
 ==================
 
