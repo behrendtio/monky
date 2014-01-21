@@ -5,4 +5,4 @@
 --growl
 --slow 25
 --no-colors
---timeout 50
+--timeout 550
