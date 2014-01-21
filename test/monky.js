@@ -210,7 +210,7 @@ describe('Monky', function() {
   });
 
   it('creates related document if factory is present', function(done) {
-    var username = 'referenced';
+    var username = 'referenced_name';
 
     monky.factory('User', { username: username });
     monky.factory('Message', { body: 'Hi!', _user: 'User' });
@@ -223,9 +223,9 @@ describe('Monky', function() {
     });
   });
 
-  it('should build documents with custom user params', function(done) {
-    var username = "Bob";
-    var customUser = "Ted";
+  it('builds documents with custom user params', function(done) {
+    var username = 'Bob';
+    var customUser = 'Ted';
 
     monky.factory('User', { username: username });
 
@@ -236,9 +236,9 @@ describe('Monky', function() {
     });
   });
 
-  it('should create documents with custom user params', function(done) {
-    var username = "Bob";
-    var customUser = "MycustomUser";
+  it('creates documents with custom user params', function(done) {
+    var username = 'Bob';
+    var customUser = 'MycustomUser';
 
     monky.factory('User', { username: username });
 
@@ -249,12 +249,12 @@ describe('Monky', function() {
     });
   });
 
-  it("should not replace default factories options reference when using custom values", function(done) {
-    var username = "myusernametest";
+  it('should not replace default factories options reference when using custom values', function(done) {
+    var username = 'myusernametest';
 
-    monky.factory('User', {username: username});
+    monky.factory('User', { username: username });
 
-    monky.create('User', {username: "mycustomusername"}, function(err, customUser) {
+    monky.create('User', { username: 'mycustomusername' }, function(err, customUser) {
       monky.create('User', function(err, defaultUser) {
         expect(defaultUser.username).to.be.equal(username);
         done();
