@@ -5,7 +5,7 @@ var mongoose  = require('mongoose')
 
 describe('Monky', function() {
   function createUserSchema(done) {
-    var Address = new mongoose.Schema({
+    var AddressSchema = new mongoose.Schema({
       street: { type: 'string' }
     });
 
@@ -22,8 +22,7 @@ describe('Monky', function() {
       street: { type: 'string' },
       city:   { type: 'string' },
       email:  { type: 'string' },
-      addresses: [Address]
-
+      addresses: [AddressSchema]
     });
 
     var MessageSchema = new mongoose.Schema({
