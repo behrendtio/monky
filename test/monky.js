@@ -260,4 +260,40 @@ describe('Monky', function() {
       });
     })
   });
+
+  it('builds lists of documents with custom user params', function(done) {
+    var username = 'Bobs username';
+    var customUser = 'Teds username';
+
+    monky.factory('User', { username: username });
+
+    monky.buildList('User', 3, { username: customUser }, function(err, users) {
+      if(err) throw err;
+
+      expect(users.length).to.equal(3);
+      users.forEach(function(user) {
+        expect(user.username).to.be.equal(customUser)
+      });
+
+      done();
+    });
+  });
+
+  it('creates lists of documents with custom user params', function(done) {
+    var username = 'Bob';
+    var customUser = 'MycustomUser';
+
+    monky.factory('User', { username: username });
+
+    monky.createList('User', 3, { username: customUser }, function(err, users) {
+      if(err) throw err;
+
+      expect(users.length).to.equal(3);
+      users.forEach(function(user) {
+        expect(user.username).to.be.equal(customUser)
+      });
+
+      done();
+    });
+  });
 });
