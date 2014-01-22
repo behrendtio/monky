@@ -1,4 +1,10 @@
 
+0.2.2 / 2014-01-22 
+==================
+
+ * Updated dependencies
+ * Multiple fixes and better tests (false positives)
+
 0.2.1 / 2014-01-12 
 ==================
 
