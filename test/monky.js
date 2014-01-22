@@ -87,11 +87,11 @@ describe('Monky', function() {
   });
 
   it('replaces #n with sequence', function(done) {
-    monky.factory('User', { username: '#n name' });
+    monky.factory('User', { username: '#n my username' });
     monky.build('User', function(err, user) {
       if (err) return done(err);
       expect(user.isNew).to.be(true);
-      expect(user.username).to.match(/\d name/);
+      expect(user.username).to.match(/\d my username/);
       done();
     });
   });
@@ -108,28 +108,28 @@ describe('Monky', function() {
   });
 
   it('should leave hash sign when using ##n', function(done) {
-    monky.factory('User', { username: 'my ##n name' });
+    monky.factory('User', { username: 'my ##n username' });
     monky.build('User', function(err, user) {
       if (err) return done(err);
       expect(user.isNew).to.be(true);
-      expect(user.username).to.match(/my #\d name/);
+      expect(user.username).to.match(/my #\d username/);
       done();
     });
   });
 
-  it('uses return value of function is one is given as value', function(done) {
+  it('uses return value of function if one is given as value', function(done) {
     function condition() {
       if (this.active) {
-        return 'active';
+        return 'active user';
       }
-      return 'inactive';
+      return 'inactive user';
     };
 
     monky.factory('User', { active: true, username: condition });
     monky.build('User', function(err, user) {
       if (err) return done(err);
       expect(user.isNew).to.be(true);
-      expect(user.username).to.be('active')
+      expect(user.username).to.be('active user')
       done();
     });
   });
@@ -160,7 +160,7 @@ describe('Monky', function() {
   });
 
   it('replaces #n within embedded documents', function(done) {
-    monky.factory('User', { addresses: [{ street: 'Avenue #n' }] });
+    monky.factory('User', { username: 'Embedded user', addresses: [{ street: 'Avenue #n' }] });
     monky.build('User', function(err, user) {
       if (err) return done(err);
       expect(user.isNew).to.be(true);
@@ -171,7 +171,7 @@ describe('Monky', function() {
   })
 
   it('returns a list of built models', function(done) {
-    monky.factory('User', { username: 'build_list' });
+    monky.factory('User', { username: 'build_list user' });
     monky.buildList('User', 3, function(err, users) {
       if (err) return done(err);
       expect(users).to.be.an(Array);
@@ -179,14 +179,14 @@ describe('Monky', function() {
       users.forEach(function(user) {
         expect(user.isNew).to.be(true);
         expect(user).to.have.property('username');
-        expect(user.username).to.be('build_list');
+        expect(user.username).to.be('build_list user');
       });
       done();
     });
   });
 
   it('returns a list of created models', function(done) {
-    monky.factory('User', { username: 'create_list' });
+    monky.factory('User', { username: 'create_list user' });
     monky.createList('User', 3, function(err, users) {
       if (err) return done(err);
       expect(users).to.be.an(Array);
@@ -194,7 +194,7 @@ describe('Monky', function() {
       users.forEach(function(user) {
         expect(user.isNew).to.be(false);
         expect(user).to.have.property('username');
-        expect(user.username).to.be('create_list');
+        expect(user.username).to.be('create_list user');
       });
       done();
     });
@@ -224,8 +224,8 @@ describe('Monky', function() {
   });
 
   it('builds documents with custom user params', function(done) {
-    var username = 'Bob';
-    var customUser = 'Ted';
+    var username = 'Bobs username';
+    var customUser = 'Teds username';
 
     monky.factory('User', { username: username });
 
