@@ -1,4 +1,9 @@
 
+0.3.1 / 2014-01-22 
+==================
+
+ * Added ability to pass custom values to 'buildList' and 'createList'
+
 0.3.0 / 2014-01-22 
 ==================
 
