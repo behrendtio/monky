@@ -237,7 +237,7 @@ describe('Monky', function() {
 
   it('creates documents with custom user params', function(done) {
     var username = 'Bob';
-    var customUser = 'MycustomUser';
+    var customUser = 'MyCustomUser';
 
     monky.factory('User', { username: username });
 
@@ -248,7 +248,7 @@ describe('Monky', function() {
     });
   });
 
-  it('should not replace default factories options reference when using custom values', function(done) {
+  it('does not replace default factories options reference when using custom values', function(done) {
     var username = 'myusernametest';
 
     monky.factory('User', { username: username });
@@ -281,7 +281,7 @@ describe('Monky', function() {
 
   it('creates lists of documents with custom user params', function(done) {
     var username = 'Bob';
-    var customUser = 'MycustomUser';
+    var customUser = 'MyCustomUser';
 
     monky.factory('User', { username: username });
 
