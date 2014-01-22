@@ -1,9 +1,7 @@
+module.exports = {
+  extend: function(obj) {
+    var objects = Array.prototype.slice.call(arguments, 1);
 
-var ArrayHelper = function() {
-  var slice  = Array.prototype.slice;
-
-  this.extend =  function(obj) {
-    var objects =  slice.call(arguments, 1);
     for (var i = 0; i < objects.length; i++) {
       var source = objects[i];
       if (source) {
@@ -11,10 +9,8 @@ var ArrayHelper = function() {
           obj[prop] = source[prop];
         }
       }
-    };
+    }
+
     return obj;
-  } 
-
-}
-
-module.exports = new ArrayHelper();
+  }
+};
