@@ -156,6 +156,19 @@ completely or for a certain factory only:</p>
 </pre></div>
 
 <h2>
+<a name="defining-named-factories" class="anchor" href="#defining-named-factories"><span class="octicon octicon-link"></span></a>Defining named factories</h2>
+
+<p>Monky uses the given factory name and maps it to the according model in
+mongoose. If you, however, want to access factories with a different name, you
+can tell monky which model to use:</p>
+
+<div class="highlight highlight-js"><pre><span class="nx">monky</span><span class="p">.</span><span class="nx">factory</span><span class="p">({</span> <span class="nx">name</span><span class="o">:</span> <span class="s1">'Admin'</span><span class="p">,</span> <span class="nx">model</span><span class="o">:</span> <span class="s1">'User'</span> <span class="p">},</span> <span class="p">{</span> <span class="nx">username</span><span class="o">:</span> <span class="nx">username</span> <span class="p">});</span>
+<span class="nx">monky</span><span class="p">.</span><span class="nx">build</span><span class="p">(</span><span class="s1">'Admin'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">admin</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// admin ==&gt; is a User, accessed as Admin</span>
+<span class="p">});</span>
+</pre></div>
+
+<h2>
 <a name="complete-example-using-mocha" class="anchor" href="#complete-example-using-mocha"><span class="octicon octicon-link"></span></a>Complete example using mocha</h2>
 
 <div class="highlight highlight-js"><pre><span class="cm">/*</span>
