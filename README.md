@@ -125,6 +125,19 @@ monky.reset(); // Reset all
 monky.reset('User'); // Reset only 'User' factory
 ```
 
+## Defining named factories
+
+Monky uses the given factory name and maps it to the according model in
+mongoose. If you, however, want to access factories with a different name, you
+can tell monky which model to use:
+
+```js
+monky.factory({ name: 'Admin', model: 'User' }, { username: username });
+monky.build('Admin', function(err, admin) {
+  // admin ==> is a User, accessed as Admin
+});
+```
+
 ## Complete example using mocha
 
 ```js

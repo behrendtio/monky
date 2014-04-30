@@ -230,7 +230,7 @@ describe('Monky', function() {
 
     monky.build('User', { username: customUser }, function(err, user) {
       if(err) throw err;
-      expect(user.username).to.be.equal(customUser)
+      expect(user.username).to.be(customUser)
       done();
     });
   });
@@ -243,7 +243,7 @@ describe('Monky', function() {
 
     monky.create('User', { username: customUser }, function(err, user) {
       if(err) throw err;
-      expect(user.username).to.be.equal(customUser);
+      expect(user.username).to.be(customUser);
       done();
     });
   });
@@ -255,7 +255,7 @@ describe('Monky', function() {
 
     monky.create('User', { username: 'mycustomusername' }, function(err, customUser) {
       monky.create('User', function(err, defaultUser) {
-        expect(defaultUser.username).to.be.equal(username);
+        expect(defaultUser.username).to.be(username);
         done();
       });
     })
@@ -272,7 +272,7 @@ describe('Monky', function() {
 
       expect(users.length).to.equal(3);
       users.forEach(function(user) {
-        expect(user.username).to.be.equal(customUser)
+        expect(user.username).to.be(customUser)
       });
 
       done();
@@ -290,9 +290,19 @@ describe('Monky', function() {
 
       expect(users.length).to.equal(3);
       users.forEach(function(user) {
-        expect(user.username).to.be.equal(customUser)
+        expect(user.username).to.be(customUser)
       });
 
+      done();
+    });
+  });
+
+  it('allows setting a specific name to access the factory later on', function(done) {
+    var username = 'administrator';
+    monky.factory({ name: 'Admin', model: 'User' }, { username: username });
+
+    monky.build('Admin', function(err, admin) {
+      expect(admin.username).to.be(username);
       done();
     });
   });
