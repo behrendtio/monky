@@ -1,4 +1,9 @@
 
+0.4.1 / 2014-07-15 
+==================
+
+ * Added support for String arrays in factories
+
 0.4.0 / 2014-04-30 
 ==================
 
