@@ -21,7 +21,7 @@ describe('Monky', function() {
       active: { type: 'boolean' },
       street: { type: 'string' },
       city:   { type: 'string' },
-      email:  { type: 'string' },
+      emails: [String],
       addresses: [AddressSchema]
     });
 
@@ -303,6 +303,17 @@ describe('Monky', function() {
 
     monky.build('Admin', function(err, admin) {
       expect(admin.username).to.be(username);
+      done();
+    });
+  });
+
+  it('handles array as a value', function(done) {
+    monky.factory('User', { username: 'user with emails', emails: ['one@example.org', 'two@example.org'] });
+
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.isNew).to.be(true);
+      expect(user.emails.length).to.be(2);
       done();
     });
   });
