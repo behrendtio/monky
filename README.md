@@ -53,15 +53,24 @@ Monky also supports references between documents:
 
 ```js
 monky.factory('User', { username: 'foo' });
-monky.factory('Message', { _user: 'User' });
+monky.factory('Message', { user: monky.ref('User') });
 
 monky.build('Message', function(message) {
-  console.log(message._user.username); // 'foo'
+  console.log(message.user.username); // 'foo'
 });
 ```
 
-Every attribute that starts with an underscore will be treated as reference. The
-according factory must be defined before it can be used in a reference.
+Referring to the specific path is also supported:
+```js
+monky.factory('User', { username: 'bar' });
+monky.factory('Message', { user_id: monky.ref('User', 'id') });
+
+monky.build('Message', function(message) {
+  console.log(message.user_id); // 53c6e964002c233e013ff4f8
+});
+```
+
+The according factory must be defined before it can be used in a reference.
 
 ## Use factories to build/create mongoose documents
 

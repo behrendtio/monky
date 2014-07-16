@@ -27,7 +27,7 @@ describe('Monky', function() {
 
     var MessageSchema = new mongoose.Schema({
       body: 'string',
-      _user: {
+      user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
       }
@@ -200,7 +200,7 @@ describe('Monky', function() {
   });
 
   it('throws error if related factory is not present', function(done) {
-    monky.factory('Message', { body: 'Hi!', _user: 'User' });
+    monky.factory('Message', { body: 'Hi!', user: monky.ref('User') });
 
     monky.build('Message', function(err) {
       expect(err).to.not.be(null);
@@ -212,11 +212,23 @@ describe('Monky', function() {
     var username = 'referenced_name';
 
     monky.factory('User', { username: username });
-    monky.factory('Message', { body: 'Hi!', _user: 'User' });
+    monky.factory('Message', { body: 'Hi!', user: monky.ref('User') });
 
     monky.build('Message', function(err, message) {
       if (err) return done(err);
-      expect(message._user.username).to.be(username)
+      expect(message.user.username).to.be(username)
+
+      message.save(done);
+    });
+  });
+
+  it('creates related document and obtains the specific path', function(done) {
+    monky.factory('User', { username: 'referenced_path_name' });
+    monky.factory('Message', { body: 'Hi!', user: monky.ref('User', 'id') });
+
+    monky.build('Message', function(err, message) {
+      if (err) return done(err);
+      expect(message.user).to.match(/^[0-9a-fA-F]{24}$/)
 
       message.save(done);
     });
