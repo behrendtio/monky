@@ -1,4 +1,10 @@
 
+0.5.0 / 2014-10-21 
+==================
+
+ * Replace sequence in nested objects, closed #18
+ * Fix a problem that callback isn't called if options empty
+
 0.4.2 / 2014-07-17 
 ==================
 
