@@ -18,6 +18,14 @@ describe('Monky', function() {
           return v && v.length > 10;
         }
       },
+      country: {
+        iso: { type: 'string' },
+        number: { type: 'string' },
+        capital: {
+          name: { type: 'string' },
+          number: { type: 'string' },
+        }
+      },
       active: { type: 'boolean' },
       street: { type: 'string' },
       city:   { type: 'string' },
@@ -91,6 +99,20 @@ describe('Monky', function() {
       if (err) return done(err);
       expect(user.isNew).to.be(true);
       expect(user.username).to.match(/\d my username/);
+      done();
+    });
+  });
+
+  it('replaces #n with sequence in nested objects', function(done) {
+    monky.factory('User', {
+      username: 'nested obj test',
+      country: { iso: 'DE', number: 'country #n', capital: { name: 'Berlin', number: 'capital #n' }}
+    });
+
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.country.number).to.match(/country \d/);
+      expect(user.country.capital.number).to.match(/capital \d/);
       done();
     });
   });
