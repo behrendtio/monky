@@ -85,14 +85,6 @@ describe('Monky', function() {
     done();
   });
 
-  it('fails to create instance due to invalid paths given', function(done) {
-    monky.factory('User', { notexisting: true });
-    monky.build('User', function(err) {
-      expect(err).to.not.be(null);
-      done();
-    });
-  });
-
   it('replaces #n with sequence', function(done) {
     monky.factory('User', { username: '#n my username' });
     monky.build('User', function(err, user) {
@@ -222,10 +214,11 @@ describe('Monky', function() {
   });
 
   it('throws error if related factory is not present', function(done) {
-    monky.factory('Message', { body: 'Hi!', user: monky.ref('User') });
+    monky.factory('Message', { body: 'Hi!', user: monky.ref('Person') });
 
     monky.build('Message', function(err) {
-      expect(err).to.not.be(null);
+      expect(err).to.be.an(Error);
+      expect(err.message).to.match(/Invalid model/);
       done();
     });
   });
@@ -350,5 +343,68 @@ describe('Monky', function() {
       expect(user.emails.length).to.be(2);
       done();
     });
+  });
+
+  it('returns promise if no callback was given for build', function(done) {
+    var name = 'promise for build';
+
+    monky.factory('User', { username: name });
+
+    monky.build('User').then(function(user) {
+      expect(user.username).to.be(name);
+      done();
+    }).end();
+  });
+
+  it('returns promise if no callback was given for create', function(done) {
+    var name = 'promise for create';
+
+    monky.factory('User', { username: name });
+
+    monky.create('User').then(function(user) {
+      expect(user.username).to.be(name);
+      done();
+    }).end();
+  });
+
+  it('returns promise if no callback was given for buildList', function(done) {
+    var name = 'promise for buildList';
+
+    monky.factory('User', { username: name });
+
+    monky.buildList('User', 5).then(function(users) {
+      expect(users.length).to.be(5);
+      users.forEach(function(user) {
+        expect(user.username).to.be(name);
+      });
+      done();
+    }).end();
+  });
+
+  it('returns promise if no callback was given for createList', function(done) {
+    var name = 'promise for createList';
+
+    monky.factory('User', { username: name });
+
+    monky.createList('User', 5).then(function(users) {
+      expect(users.length).to.be(5);
+      users.forEach(function(user) {
+        expect(user.username).to.be(name);
+      });
+      done();
+    }).end();
+  });
+
+  it('returns rejected promise on failure', function(done) {
+    var name = 'rejected';
+
+    monky.factory('User', { username: name });
+
+    monky.build('User').then(function(user) {
+      // On success...
+    }, function(err) {
+      expect(err).to.be.an(Error);
+      done();
+    }).end();
   });
 });

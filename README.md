@@ -212,6 +212,19 @@ describe('User', function() {
 });
 ```
 
+## Promises
+
+As of version `0.6.0` Monky also fully supports promises for all public facing
+build/create functions, e.g.:
+
+```javascript
+monky.build('User').then(function(user) {
+  // user ==> built doc
+}, function(err) {
+  // err ==> triggered error
+});
+```
+
 # Running tests
 
 Install dev dependencies and run the tests.

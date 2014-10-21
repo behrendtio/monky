@@ -24,6 +24,7 @@
     "expect.js": "0.2.0",
     "stats": "1.0.0",
     "sinon": "1.7.3",
-    "mongoose": "3.8.4"
+    "mongoose": "3.8.4",
+    "mpromise": "0.5.5"
   }
 }
