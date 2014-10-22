@@ -230,6 +230,22 @@ describe('Monky', function() {
     });
   });
 
+  it('allows to use created objects as reference', function(done) {
+    var username = 'a-different-username';
+
+    monky.factory('User', { username: 'username' });
+    monky.factory('Message', { body: 'Hi!', user: monky.ref('User') });
+
+    monky.create('User', { username: username }, function(err, user) {
+      if (err) return done(err);
+      monky.create('Message', { user: user }, function(err, message) {
+        if (err) return done(err);
+        expect(message.user.username).to.be(username);
+        message.save(done);
+      });
+    });
+  });
+
   it('creates related document if factory is present', function(done) {
     var username = 'referenced_name';
 
