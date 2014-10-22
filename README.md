@@ -72,6 +72,29 @@ monky.build('Message', function(message) {
 
 The according factory must be defined before it can be used in a reference.
 
+### Passing reference instances as values
+
+If you have an existing instance you can pass it as value to `build`/`create`:
+
+```js
+monky.create('User', function(err, user) {
+  monky.create('Message', { user: user }, function(err, message) {
+    console.log(message.user.username); // ==> equals user.username
+  });
+});
+```
+
+If you don't need the child instance to be populated but only saved, you can pass
+the `ObjectID` instead:
+
+```js
+monky.create('User', function(err, user) {
+  monky.create('Message', { user: user._id }, function(err, message) {
+    console.log(message.user); // ==> equals user.id
+  });
+});
+```
+
 ## Use factories to build/create mongoose documents
 
 ### Build
