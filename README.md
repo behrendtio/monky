@@ -225,6 +225,11 @@ monky.build('User').then(function(user) {
 });
 ```
 
+**Note**: Monky uses `mpromise` for promise handling, as does `mongoose`. The
+current implementation of `mpromise` uses node 0.10.x APIs, making the promise
+part of `Monky` not suitable for prior versions. If you're still using node
+0.8.x, use the callback interface instead.
+
 # Running tests
 
 Install dev dependencies and run the tests.
