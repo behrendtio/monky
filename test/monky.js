@@ -267,7 +267,7 @@ describe('Monky', function() {
 
     monky.create('Message', { user: null }, function(err, message) {
       if (err) return done(err);
-      expect(message.user).to.eq(null);
+      expect(message.user).to.be(null);
       message.save(done);
     });
   });
