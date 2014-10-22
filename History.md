@@ -1,4 +1,13 @@
 
+0.5.1 / 2014-10-22 
+==================
+
+ * Fixed passing an ObjectID, refs #20
+ * Fix setting null values, refs #20
+ * Merge pull request #23 from johanneswuerbach/failing-tests
+ * Added test for passing a reference to create, refs #20
+ * Fix regression in 0.5.0 related to direct object references, refs #20
+
 0.5.0 / 2014-10-21 
 ==================
 
