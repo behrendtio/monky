@@ -1,11 +1,11 @@
 {
   "name": "monky",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Mongoose fixtures library inspired by factory_girl",
   "main": "index.js",
   "homepage": "http://www.behrendt.io/monky",
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 0.10.0"
   },
   "keywords": ["mongoose", "mongo", "factory", "test", "testing", "setup", "fixtures", "mocha", "tdd"],
   "author": "Mario Behrendt <info@mario-behrendt.de>",
