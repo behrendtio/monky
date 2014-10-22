@@ -252,7 +252,7 @@ describe('Monky', function() {
 
     monky.create('User', { username: username }, function(err, user) {
       if (err) return done(err);
-      monky.create('Message', { user: user }, function(err, message) {
+      monky.create('Message', { user: user._id }, function(err, message) {
         if (err) return done(err);
         expect(message.user.username).to.be(username);
         message.save(done);

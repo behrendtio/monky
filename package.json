@@ -7,23 +7,32 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "keywords": ["mongoose", "mongo", "factory", "test", "testing", "setup", "fixtures", "mocha", "tdd"],
+  "keywords": [
+    "mongoose",
+    "mongo",
+    "factory",
+    "test",
+    "testing",
+    "setup",
+    "fixtures",
+    "mocha",
+    "tdd"
+  ],
   "author": "Mario Behrendt <info@mario-behrendt.de>",
   "scripts": {
     "test": "make test"
   },
   "repository": {
-    "type" : "git",
+    "type": "git",
     "url": "git://github.com/behrendtio/monky.git"
   },
   "license": "MIT",
-  "dependencies": {
-  },
-  "devDependencies" : {
-    "mocha": "1.17.0",
+  "dependencies": {},
+  "devDependencies": {
     "expect.js": "0.2.0",
-    "stats": "1.0.0",
+    "mocha": "1.17.0",
+    "mongoose": "3.8.17",
     "sinon": "1.7.3",
-    "mongoose": "3.8.4"
+    "stats": "1.0.0"
   }
 }
