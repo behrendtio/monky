@@ -30,7 +30,8 @@ describe('Monky', function() {
       street: { type: 'string' },
       city:   { type: 'string' },
       emails: [String],
-      addresses: [AddressSchema]
+      addresses: [AddressSchema],
+      data: {}
     });
 
     var MessageSchema = new mongoose.Schema({
@@ -105,6 +106,24 @@ describe('Monky', function() {
       if (err) return done(err);
       expect(user.country.number).to.match(/country \d/);
       expect(user.country.capital.number).to.match(/capital \d/);
+      done();
+    });
+  });
+
+  it('should correctly initialize a mixed path', function(done) {
+    var data = {
+      one: 1,
+      two: 2,
+      three: 3
+    };
+    monky.factory('User', {
+      username: 'mixed path test',
+      data: data
+    });
+
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.data).to.eql(data);
       done();
     });
   });
