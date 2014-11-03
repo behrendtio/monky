@@ -1,6 +1,6 @@
 {
   "name": "monky",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Mongoose fixtures library inspired by factory_girl",
   "main": "index.js",
   "homepage": "http://www.behrendt.io/monky",
