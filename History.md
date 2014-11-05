@@ -1,4 +1,9 @@
 
+0.6.2 / 2014-11-05 
+==================
+
+ * Don't use pass by reference to create new model instance, refs #27
+
 0.6.1 / 2014-11-03 
 ==================
 
