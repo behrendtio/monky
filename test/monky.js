@@ -468,4 +468,24 @@ describe('Monky', function() {
       done();
     }).end();
   });
+
+  it('keeps the source options unmodified', function(done) {
+    monky.factory('User', {
+      username: 'nested options',
+      details: [{ value: 1 }]
+    });
+
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+
+      expect(user.details[0].value).to.be(1);
+      user.details[0].value = 2;
+
+      monky.build('User', function(err, user) {
+        if (err) return done(err);
+        expect(user.details[0].value).to.be(1);
+        done();
+      });
+    });
+  });
 });
