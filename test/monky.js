@@ -31,6 +31,7 @@ describe('Monky', function() {
       city:   { type: 'string' },
       emails: [String],
       addresses: [AddressSchema],
+      date: { type: Date },
       data: {}
     });
 
@@ -486,6 +487,17 @@ describe('Monky', function() {
         expect(user.details[0].value).to.be(1);
         done();
       });
+    });
+  });
+
+  it('handles dates correctly', function(done) {
+    var date = new Date();
+
+    monky.factory('User', { username: '#n username with date', date: date });
+    monky.create('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.date).to.be(date);
+      done();
     });
   });
 });
