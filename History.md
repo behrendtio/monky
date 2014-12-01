@@ -1,4 +1,9 @@
 
+0.6.5 / 2014-12-01 
+==================
+
+ * Fix monky.create with an array of monky references, refs #29
+
 0.6.4 / 2014-12-01 
 ==================
 
