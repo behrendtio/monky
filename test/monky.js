@@ -32,7 +32,8 @@ describe('Monky', function() {
       emails: [String],
       addresses: [AddressSchema],
       date: { type: Date },
-      data: {}
+      data: {},
+      addressInstances: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }]
     });
 
     var MessageSchema = new mongoose.Schema({
@@ -45,6 +46,7 @@ describe('Monky', function() {
 
     mongoose.model('User', UserSchema);
     mongoose.model('Message', MessageSchema);
+    mongoose.model('Address', AddressSchema);
     done();
   };
 
@@ -497,6 +499,20 @@ describe('Monky', function() {
     monky.create('User', function(err, user) {
       if (err) return done(err);
       expect(user.date).to.be(date);
+      done();
+    });
+  });
+
+  it('handles arrays of monky refs correctly', function(done) {
+    var street = 'Baker street';
+
+    monky.factory('Address', { street: street });
+    monky.factory('User', { username: 'arrayrefuser', addressInstances: [monky.ref('Address')] });
+
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.addressInstances.length).to.be(1);
+      expect(user.addressInstances[0].street).to.be(street);
       done();
     });
   });
