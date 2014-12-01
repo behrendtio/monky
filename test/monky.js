@@ -509,7 +509,7 @@ describe('Monky', function() {
     monky.factory('Address', { street: street });
     monky.factory('User', { username: 'arrayrefuser', addressInstances: [monky.ref('Address')] });
 
-    monky.build('User', function(err, user) {
+    monky.create('User', function(err, user) {
       if (err) return done(err);
       expect(user.addressInstances.length).to.be(1);
       expect(user.addressInstances[0].street).to.be(street);
