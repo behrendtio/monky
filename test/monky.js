@@ -59,6 +59,12 @@ describe('Monky', function() {
     done();
   });
 
+  it('does not validate the model on build', function(done) {
+    monky.factory('User', { active: true });
+
+    monky.build('User', done);
+  });
+
   it('resets factories with fluent interface', function(done) {
     monky.factory('User', { username: '#n' });
     expect(Object.keys(monky.factories).length).to.be(1);
@@ -464,7 +470,7 @@ describe('Monky', function() {
 
     monky.factory('User', { username: name });
 
-    monky.build('User').then(function(user) {
+    monky.create('User').then(function(user) {
       // On success...
     }, function(err) {
       expect(err).to.be.an(Error);
