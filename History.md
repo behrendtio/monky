@@ -1,4 +1,10 @@
 
+0.6.7 / 2015-06-03 
+==================
+
+ * Don't validate on build, refs #32
+ * Clean up, use lodash instead of old array helper
+
 0.6.6 / 2014-12-15 
 ==================
 
