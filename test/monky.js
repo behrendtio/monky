@@ -95,6 +95,38 @@ describe('Monky', function() {
     done();
   });
 
+  it('resets sequences with fluent interface', function (done) {
+    monky.factory('User', { username: '#n' });
+    expect(Object.keys(monky.sequences).length).to.be(0);
+    monky.build('User', function (err, user) {
+      if (err) return done(err);
+      expect(Object.keys(monky.sequences).length).to.be(1);
+      expect(monky.sequences.User.username).to.be(1);
+      monky.reset();
+      expect(Object.keys(monky.sequences).length).to.be(0);
+      done();
+    })
+  });
+
+  it('resets a certan sequence only', function (done) {
+    monky.factory('User', { username: '#n' });
+    monky.factory('Message', { body: 'Foo #n' });
+    expect(Object.keys(monky.sequences).length).to.be(0);
+
+    monky.build('User', function (err, user) {
+      monky.build('Message', function (err, message) {
+        if (err) return done(err);
+        expect(Object.keys(monky.sequences).length).to.be(2);
+        expect(monky.sequences.User.username).to.be(1);
+        expect(monky.sequences.Message.body).to.be(1);
+        monky.reset('User');
+        expect(Object.keys(monky.sequences).length).to.be(1);
+        expect(monky.sequences.Message.body).to.be(1);
+        done();
+      });
+    })
+  })
+
   it('replaces #n with sequence', function(done) {
     monky.factory('User', { username: '#n my username' });
     monky.build('User', function(err, user) {
