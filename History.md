@@ -1,4 +1,9 @@
 
+0.6.8 / 2015-10-12 
+==================
+
+ * Reset sequences when resetting factories as well
+
 0.6.7 / 2015-06-03 
 ==================
 
