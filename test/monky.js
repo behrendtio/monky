@@ -137,6 +137,15 @@ describe('Monky', function() {
     });
   });
 
+  it('replaces #n with sequence in arrays', function(done) {
+    monky.factory('User', { emails: ['#n@example.org'] });
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.emails[0]).to.match(/\d@example\.org/)
+      done();
+    })
+  });
+
   it('replaces #n with sequence in nested objects', function(done) {
     monky.factory('User', {
       username: 'nested obj test',
