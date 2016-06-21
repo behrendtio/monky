@@ -1,4 +1,9 @@
 
+0.6.10 / 2016-06-21 
+==================
+
+ * Fix initialization in case of nested objects
+
 0.6.9 / 2016-05-31 
 ==================
 
