@@ -33,6 +33,13 @@ describe('Monky', function() {
       addresses: [AddressSchema],
       date: { type: Date },
       data: {},
+      notification: {
+        email: { type: 'boolean', 'default': true },
+        sns: {
+          account: { type: 'string' },
+          enabled: { type: 'boolean', 'default': false }
+        }
+      },
       addressInstances: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }]
     });
 
@@ -174,6 +181,23 @@ describe('Monky', function() {
     monky.build('User', function(err, user) {
       if (err) return done(err);
       expect(user.data).to.eql(data);
+      done();
+    });
+  });
+
+  it('should correctly initialize nested objects', function(done) {
+    monky.factory('User', {
+      username: 'nested objects test',
+      notification: {
+        sns: {
+          account: 'test account'
+        }
+      }
+    });
+    monky.build('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.notification.email).to.be(true);
+      expect(user.notification.sns).to.eql({ account: 'test account', enabled: false });
       done();
     });
   });
