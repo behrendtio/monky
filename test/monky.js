@@ -153,6 +153,7 @@ describe('Monky', function() {
     monky.factory('User', { emails: ['#n@example.org'] });
     monky.build('User', function(err, user) {
       if (err) return done(err);
+      console.log({user})
       expect(user.emails[0]).to.match(/\d@example\.org/)
       done();
     })
