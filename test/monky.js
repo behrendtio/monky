@@ -589,6 +589,7 @@ describe('Monky', function() {
       if (err) return done(err);
       expect(user.addressInstances.length).to.be(1);
       expect(user.addressInstances[0].street).to.be(street);
+      expect(user.addressInstances[0]._id).match(/^[0-9a-fA-F]{24}$/);
       done();
     });
   });
@@ -603,7 +604,7 @@ describe('Monky', function() {
     monky.create('User', function(err, user) {
       if (err) return done(err);
       expect(user.addressSchemaWtihInstance.length).to.be(1);
-      expect(user.addressSchemaWtihInstance[0].addressId).match(/^[0-9a-fA-F]{24}$/);
+      expect(user.addressSchemaWtihInstance[0].addressId._id).match(/^[0-9a-fA-F]{24}$/);
       done();
     });
   });
