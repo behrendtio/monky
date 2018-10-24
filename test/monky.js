@@ -153,7 +153,6 @@ describe('Monky', function() {
     monky.factory('User', { emails: ['#n@example.org'] });
     monky.build('User', function(err, user) {
       if (err) return done(err);
-      console.log({user})
       expect(user.emails[0]).to.match(/\d@example\.org/)
       done();
     })
@@ -595,18 +594,17 @@ describe('Monky', function() {
   });
 
 
-  // it.only('handles arrays of subdocuments with monky refs correctly', function(done) {
-  //   var street = 'Baker street';
+  it('handles arrays of subdocuments with monky refs correctly', function(done) {
+    var street = 'Baker street';
 
-  //   monky.factory('Address', { street: street });
-  //   monky.factory('User', { username: 'arrayrefuser', addressSchemaWtihInstance: [{addressId: monky.ref('Address')}] });
+    monky.factory('Address', { street: street });
+    monky.factory('User', { username: 'arrayrefuser', addressSchemaWtihInstance: [{addressId: monky.ref('Address')}] });
 
-  //   monky.create('User', function(err, user) {
-  //     console.log(user)
-  //     if (err) return done(err);
-  //     expect(user.addressInstances.length).to.be(1);
-  //     expect(user.addressInstances[0].street).to.be(street);
-  //     done();
-  //   });
-  // });
+    monky.create('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.addressSchemaWtihInstance.length).to.be(1);
+      expect(user.addressSchemaWtihInstance[0].addressId).match(/^[0-9a-fA-F]{24}$/);
+      done();
+    });
+  });
 });
