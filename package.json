@@ -28,14 +28,14 @@
   },
   "license": "MIT",
   "dependencies": {
-    "mpromise": "0.5.5",
-    "lodash": "^2.4.1"
+    "lodash": "^3.10.1",
+    "mpromise": "0.5.5"
   },
   "devDependencies": {
-    "mocha": "1.17.0",
     "expect.js": "0.2.0",
-    "stats": "1.0.0",
+    "mocha": "1.17.0",
+    "mongoose": "^5.3.6",
     "sinon": "1.7.3",
-    "mongoose": "3.8.17"
+    "stats": "1.0.0"
   }
 }

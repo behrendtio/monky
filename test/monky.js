@@ -5,6 +5,10 @@ var mongoose  = require('mongoose')
 
 describe('Monky', function() {
   function createUserSchema(done) {
+    var AddressSchemaWtihInstance = new mongoose.Schema({
+      addressId: { type: mongoose.Schema.Types.ObjectId, ref: 'Address' }
+    });
+
     var AddressSchema = new mongoose.Schema({
       street: { type: 'string' }
     });
@@ -40,7 +44,8 @@ describe('Monky', function() {
           enabled: { type: 'boolean', 'default': false }
         }
       },
-      addressInstances: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }]
+      addressInstances: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+      addressSchemaWtihInstance: [AddressSchemaWtihInstance]
     });
 
     var MessageSchema = new mongoose.Schema({
@@ -584,6 +589,22 @@ describe('Monky', function() {
       if (err) return done(err);
       expect(user.addressInstances.length).to.be(1);
       expect(user.addressInstances[0].street).to.be(street);
+      expect(user.addressInstances[0]._id).match(/^[0-9a-fA-F]{24}$/);
+      done();
+    });
+  });
+
+
+  it('handles arrays of subdocuments with monky refs correctly', function(done) {
+    var street = 'Baker street';
+
+    monky.factory('Address', { street: street });
+    monky.factory('User', { username: 'arrayrefuser', addressSchemaWtihInstance: [{addressId: monky.ref('Address')}] });
+
+    monky.create('User', function(err, user) {
+      if (err) return done(err);
+      expect(user.addressSchemaWtihInstance.length).to.be(1);
+      expect(user.addressSchemaWtihInstance[0].addressId._id).match(/^[0-9a-fA-F]{24}$/);
       done();
     });
   });
