@@ -1,4 +1,9 @@
 
+0.6.12 / 2018-10-29
+==================
+
+  * Supports an array of subdocuments with references
+
 0.6.11 / 2017-08-29
 ==================
 
