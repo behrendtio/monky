@@ -28,7 +28,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.21",
     "mpromise": "0.5.5"
   },
   "devDependencies": {
