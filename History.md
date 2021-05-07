@@ -1,4 +1,10 @@
 
+0.6.13 / 2021-05-07
+==================
+
+  * Fix: Reject promise correctly for monky._doList(...)
+  * Mandatory node v8.12 now
+
 0.6.12 / 2018-10-29
 ==================
 
