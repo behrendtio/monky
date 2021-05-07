@@ -17,7 +17,7 @@ describe('Monky', function() {
       username: {
         type: 'string',
         required: true,
-        unique: true,
+        unique: true, // This is not being enforced bc docs are never written to db
         validate: function(v) {
           return v && v.length > 10;
         }
@@ -56,9 +56,20 @@ describe('Monky', function() {
       }
     });
 
+    var TeamSchema = new mongoose.Schema({
+      name: {
+        type: String,
+        validate: function(v) {
+          return v && v.length > 10;
+        },
+      },
+    });
+
     mongoose.model('User', UserSchema);
     mongoose.model('Message', MessageSchema);
     mongoose.model('Address', AddressSchema);
+    mongoose.model('Team', TeamSchema);
+
     done();
   };
 
@@ -607,5 +618,27 @@ describe('Monky', function() {
       expect(user.addressSchemaWtihInstance[0].addressId._id).match(/^[0-9a-fA-F]{24}$/);
       done();
     });
+  });
+
+  it('correctly returns errors when using promises with createList or buildList', function(done){
+    // A regression test to catch a bug where promises where not rejecting appropriately for monky._doList
+    var name = 'ateamname';
+    var count = 2;
+    var model = 'Team';
+
+    monky.factory(model, { 
+      name: () => "#n name"
+    });
+
+    const expectedErr = 'ValidationError: Team validation failed: name: Validator failed for path `name` with value `ateamname`';
+
+    monky.createList(model, count, { name: name }).then(function(docs) {
+      expect(!docs); // This should not succeed
+    })
+    .catch(err => {
+      expect(err.message === expectedErr)
+      done();
+    })
+    .end();
   });
 });
