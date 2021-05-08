@@ -1,4 +1,10 @@
 
+0.7.0 / 2021-05-08
+==================
+
+  * Node.js v10 is now the minimum supported version
+  * Upgraded all packages and modernised code to ES6
+
 0.6.13 / 2021-05-07
 ==================
 
