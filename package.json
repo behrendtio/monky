@@ -5,7 +5,7 @@
   "main": "index.js",
   "homepage": "https://github.com/behrendtio/monky",
   "engines": {
-    "node": ">= 6.0.0"
+    "node": ">= 10.0.0"
   },
   "keywords": [
     "mongoose",
