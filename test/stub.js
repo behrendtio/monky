@@ -1,12 +1,13 @@
-var sinon     = require('sinon')
-  , mongoose  = require('mongoose');
+const sinon = require('sinon')
+const mongoose = require('mongoose')
 
-sinon.stub(mongoose.Model.prototype, 'save', function(cb) {
-  var model = this;
-  this.validate(function(err) {
+sinon.stub(mongoose.Model.prototype, 'save').callsFake(function(cb) {
+  var model = this
+
+  this.validate(err => {
     if (!err) {
-      model.isNew = false;
+      model.isNew = false
     }
-    cb(err, model);
-  });
-});
+    cb(err, model)
+  })
+})
