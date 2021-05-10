@@ -90,7 +90,7 @@ As well as passing options to the reference factory:
 monky.factory('Organisation', { name: 'Super org 1' })
 monky.factory('Team', {
   name: 'Super Team 1', organisation: monky.ref('Organisation')
-  })
+})
 monky.factory('User', { team: monky.ref('Team') })
 
 // With `path`
