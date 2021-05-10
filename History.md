@@ -1,4 +1,10 @@
 
+0.7.1 / 2021-05-10
+==================
+
+  * Modernised tests
+  * Fix for #47, solving multi layer references
+
 0.7.0 / 2021-05-08
 ==================
 
