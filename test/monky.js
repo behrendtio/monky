@@ -45,7 +45,11 @@ describe('Monky', function() {
         }
       },
       addressInstances: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
-      addressSchemaWtihInstance: [AddressSchemaWtihInstance]
+      addressSchemaWtihInstance: [AddressSchemaWtihInstance],
+      team: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Team'
+      }
     });
 
     var MessageSchema = new mongoose.Schema({
@@ -56,19 +60,29 @@ describe('Monky', function() {
       }
     });
 
+    var OrganisationSchema = new mongoose.Schema({
+      name: 'string'
+    })
+
     var TeamSchema = new mongoose.Schema({
       name: {
-        type: String,
+        type: 'string',
+        required : true,
         validate: function(v) {
           return v && v.length > 10;
-        },
+        }
       },
+      organisation: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Organisation'
+      }
     });
 
     mongoose.model('User', UserSchema);
     mongoose.model('Message', MessageSchema);
     mongoose.model('Address', AddressSchema);
     mongoose.model('Team', TeamSchema);
+    mongoose.model('Organisation', OrganisationSchema);
 
     done();
   };
@@ -620,17 +634,17 @@ describe('Monky', function() {
     });
   });
 
-  it('correctly returns errors when using promises with createList or buildList', function(done){
-    // A regression test to catch a bug where promises where not rejecting appropriately for monky._doList
+  // A regression test to catch a bug where promises where not rejecting appropriately for monky._doList
+  it('correctly returns errors when using promises with createList or buildList', done => {
     var name = 'ateamname';
     var count = 2;
     var model = 'Team';
 
     monky.factory(model, { 
       name: () => "#n name"
-    });
+    })
 
-    const expectedErr = 'ValidationError: Team validation failed: name: Validator failed for path `name` with value `ateamname`';
+    const expectedErr = 'ValidationError: Team validation failed: name: Validator failed for path `name` with value `ateamname`'
 
     monky.createList(model, count, { name: name }).then(function(docs) {
       expect(!docs); // This should not succeed
@@ -641,4 +655,17 @@ describe('Monky', function() {
     })
     .end();
   });
-});
+
+  it('creates relationships for several layers', done => {
+    const orgName = 'Org 1'
+
+    monky.factory('Organisation', { name: orgName })
+    monky.factory('Team', { name: 'Super Team 1', organisation: monky.ref('Organisation') })
+    monky.factory('User', { team: monky.ref('Team') })
+
+    monky.create('User', { username: 'multilayertest' }, (err, user) => {
+      expect(user.team.organisation.name).to.equal(orgName)
+      done()
+    })
+  })
+})
