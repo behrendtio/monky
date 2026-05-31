@@ -1,4 +1,4 @@
-[![Build Status](https://secure.travis-ci.org/behrendtio/monky.png?branch=master)](https://travis-ci.org/behrendtio/monky)
+[![CI](https://github.com/behrendtio/monky/actions/workflows/ci.yml/badge.svg)](https://github.com/behrendtio/monky/actions)
 
 # Monky
 
