@@ -18,7 +18,7 @@
     "mocha",
     "tdd"
   ],
-  "author": "Mario Behrendt <info@mario-behrendt.de>",
+  "author": "Mario Behrendt",
   "scripts": {
     "test": "make test"
   },
