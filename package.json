@@ -34,7 +34,7 @@
   "devDependencies": {
     "expect.js": "0.3.1",
     "mocha": "11.7.6",
-    "mongoose": "^5.12.7",
+    "mongoose": "^6.13.9",
     "sinon": "10.0.0",
     "stats": "1.0.0"
   }
