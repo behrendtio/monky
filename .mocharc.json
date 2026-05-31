@@ -1,0 +1,9 @@
+{
+  "require": ["./test/stub"],
+  "recursive": true,
+  "bail": true,
+  "ui": "bdd",
+  "slow": 25,
+  "color": false,
+  "timeout": 550
+}
