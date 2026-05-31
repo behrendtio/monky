@@ -619,6 +619,22 @@ describe('Monky', () => {
     })
   })
 
+  it('uses given path for monky refs in arrays', done => {
+    const username = 'array ref username'
+
+    monky.factory({ name: 'RelatedUser', model: 'User' }, { username: username })
+    monky.factory('User', {
+      username: 'arrayrefuser',
+      emails: [monky.ref('RelatedUser', 'username')]
+    })
+
+    monky.build('User', (err, user) => {
+      if (err) return done(err)
+      expect(user.emails).to.eql([username])
+      done()
+    })
+  })
+
 
   it('handles arrays of subdocuments with monky refs correctly', done => {
     const street = 'Baker street'
